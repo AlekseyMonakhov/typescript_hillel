@@ -1,4 +1,4 @@
-const nameA = "alex"
+
 
 class School {
   
