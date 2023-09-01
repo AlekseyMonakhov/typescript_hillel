@@ -1,48 +1,43 @@
+import {DIRECTIONS, LEVELS} from "./constants";
+import {
+    DirectionInterface,
+    GroupInterface,
+    LevelInterface,
+    SchoolInerface,
+    StudentInterface
+} from "./types";
 
 
-interface Student {
-    getPerformanceRating(): number;
-}
+class School implements SchoolInerface {
+    directions: DIRECTIONS[] = [];
 
-
-class School {
-  
-    directions: string[] = [];
-
-    addDirection(direction: string) {
+    addDirection(direction: DIRECTIONS) {
         this.directions.push(direction);
     }
-
 }
 
-class Direction {
-    levels: Array<string> = [];
-    _name: string;
+class Direction implements DirectionInterface {
+    levels: Array<LEVELS> = [];
 
-    get name() {
+    get name(): string {
         return this._name;
     }
 
-    constructor(name: string) {
-        this._name = name;
+    constructor(private _name: string) {
     }
 
-    addLevel(level: string) {
+    addLevel(level: LEVELS): void {
         this.levels.push(level);
     }
 }
 
-class Level {
-    groups: Array<string> = [];
-    _name: string;
-    _program: string;
+class Level implements LevelInterface {
+    groups: Array<GroupInterface> = [];
 
-    constructor(name: string, program: string) {
-        this._name = name;
-        this._program = program;
+    constructor(private _name: string, private _program: string) {
     }
 
-    get name() {
+    get name(): string {
         return this._name;
     }
 
@@ -50,53 +45,44 @@ class Level {
         return this._program;
     }
 
-    addGroup(group: string) {
+    addGroup(group: GroupInterface) {
         this.groups.push(group);
     }
 }
 
-
-class Group {
-    _students: Array<Student> = [];
-    directionName: string;
-    levelName: string;
+class Group implements GroupInterface {
+    private _students: Array<StudentInterface> = [];
 
     get students() {
         return this._students;
     }
 
-    constructor(directionName: string, levelName: string) {
-        this.directionName = directionName;
-        this.levelName = levelName;
+    constructor(public directionName: string, public levelName: string) {
     }
 
-    addStudent(student: Student) {
+    addStudent(student: StudentInterface) {
         this._students.push(student);
     }
 
     showPerformance() {
-        const sortedStudents = [...this._students].sort(
+        return [...this._students].sort(
             (a, b) => b.getPerformanceRating() - a.getPerformanceRating()
         );
-
-        return sortedStudents;
     }
 }
 
-class Student {
-    grades = {};
+class Student implements StudentInterface {
+    public grades: Record<string, number> = {};
     attendance: string[] = [];
-    firstName: string;
-    lastName: string;
-    birthYear: number;
 
-    constructor(firstName: string, lastName: string, birthYear: number) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthYear = birthYear;
+    constructor(
+        public firstName: string,
+        public lastName: string,
+        public birthYear: number
+    ) {
     }
 
-    get fullName() {
+    get fullName(): string {
         return `${this.lastName} ${this.firstName}`;
     }
 
@@ -104,11 +90,11 @@ class Student {
         [this.lastName, this.firstName] = value.split(" ");
     }
 
-    get age() {
+    get age(): number {
         return new Date().getFullYear() - this.birthYear;
     }
 
-    setGrade(subject: string, grade: number) {
+    setGrade(subject: string, grade: number): void {
         this.grades[subject] = grade;
     }
 
