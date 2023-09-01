@@ -81,10 +81,17 @@ var Group = /** @class */ (function () {
 }());
 var Student = /** @class */ (function () {
     function Student(firstName, lastName, birthYear) {
+        var _a;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthYear = birthYear;
-        this.grades = {};
+        this.grades = (_a = {},
+            _a["BACK_END" /* SUBJECTS.BACK_END */] = 0,
+            _a["CSHARP" /* SUBJECTS.CSHARP */] = 0,
+            _a["DEVOPS" /* SUBJECTS.DEVOPS */] = 0,
+            _a["TYPESCRIPT" /* SUBJECTS.TYPESCRIPT */] = 0,
+            _a["FRONT_END" /* SUBJECTS.FRONT_END */] = 0,
+            _a);
         this.attendance = [];
     }
     Object.defineProperty(Student.prototype, "fullName", {
@@ -117,9 +124,7 @@ var Student = /** @class */ (function () {
             return 0;
         var averageGrade = gradeValues.reduce(function (sum, grade) { return sum + grade; }, 0) /
             gradeValues.length;
-        var attendancePercentage = (this.attendance.filter(function (present) { return present; }).length /
-            this.attendance.length) *
-            100;
+        var attendancePercentage = (this.attendance.filter(function (present) { return present; }).length / this.attendance.length) * 100;
         return (averageGrade + attendancePercentage) / 2;
     };
     return Student;

@@ -1,4 +1,4 @@
-import {DIRECTIONS, LEVELS} from "../constants";
+import {DIRECTIONS, LEVELS, SUBJECTS} from "../constants";
 
 export interface SchoolInerface {
     directions: DIRECTIONS[],
@@ -29,12 +29,12 @@ export interface GroupInterface {
 }
 
 export interface StudentInterface {
-    grades: Record<string, number>,
+    grades: Record<SUBJECTS, number>,
     attendance: string[],
     fullName: string,
     age: number,
 
-    setGrade(subject: string, grade: number): void,
+    setGrade(subject: SUBJECTS, grade: number): void,
 
     markAttendance(present: string): void,
 

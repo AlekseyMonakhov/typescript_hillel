@@ -1,4 +1,4 @@
-import {DIRECTIONS, LEVELS} from "./constants";
+import {DIRECTIONS, LEVELS, SUBJECTS} from "./constants";
 import {
     DirectionInterface,
     GroupInterface,
@@ -72,7 +72,14 @@ class Group implements GroupInterface {
 }
 
 class Student implements StudentInterface {
-    public grades: Record<string, number> = {};
+    public grades: Record<SUBJECTS, number> = {
+        [SUBJECTS.BACK_END] : 0,
+        [SUBJECTS.CSHARP]: 0,
+        [SUBJECTS.DEVOPS]: 0,
+        [SUBJECTS.TYPESCRIPT]: 0,
+        [SUBJECTS.FRONT_END]: 0,
+    };
+
     attendance: string[] = [];
 
     constructor(
@@ -86,7 +93,7 @@ class Student implements StudentInterface {
         return `${this.lastName} ${this.firstName}`;
     }
 
-    set fullName(value) {
+    set fullName(value: string) {
         [this.lastName, this.firstName] = value.split(" ");
     }
 
@@ -94,7 +101,7 @@ class Student implements StudentInterface {
         return new Date().getFullYear() - this.birthYear;
     }
 
-    setGrade(subject: string, grade: number): void {
+    setGrade(subject: SUBJECTS, grade: number): void {
         this.grades[subject] = grade;
     }
 
@@ -112,9 +119,7 @@ class Student implements StudentInterface {
             gradeValues.length;
 
         const attendancePercentage =
-            (this.attendance.filter((present) => present).length /
-                this.attendance.length) *
-            100;
+            (this.attendance.filter((present) => present).length / this.attendance.length) * 100;
 
         return (averageGrade + attendancePercentage) / 2;
     }
