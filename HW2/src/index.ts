@@ -152,7 +152,7 @@ class Student implements StudentInterface {
     [SUBJECTS.FRONT_END]: 0,
   };
 
-  private _visits: Record<string, boolean> = {}; // danger -key should be unic
+  private _visits: Array<[string, boolean]> = [];
 
   get fullName(): string {
     return `${this._lastName} ${this._firstName}`;
@@ -177,7 +177,7 @@ class Student implements StudentInterface {
   }
 
   setVisit(lesson: string, isPresent: boolean): void {
-    this._visits[lesson] = isPresent;
+    this._visits.push([lesson, isPresent]);
   }
 
   getPerformanceRating(): number {
@@ -187,8 +187,7 @@ class Student implements StudentInterface {
 
     const averageGrade = gradeValues.reduce((sum, grade) => sum + grade, 0) / gradeValues.length;
 
-    const attendancePercentage =
-      (Object.values(this._visits).filter(visit => !!visit).length / Object.keys(this._visits).length) * 100;
+    const attendancePercentage = (this._visits.filter(el => !!el[1]).length / this._visits.length) * 100;
 
     return (averageGrade + attendancePercentage) / 2;
   }

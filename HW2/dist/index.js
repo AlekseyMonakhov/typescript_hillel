@@ -122,7 +122,7 @@ class Student {
         ["TYPESCRIPT" /* SUBJECTS.TYPESCRIPT */]: 0,
         ["FRONT_END" /* SUBJECTS.FRONT_END */]: 0,
     };
-    _visits = {}; // danger -key should be unic
+    _visits = [];
     get fullName() {
         return `${this._lastName} ${this._firstName}`;
     }
@@ -141,14 +141,14 @@ class Student {
         this._grades[subject] = grade;
     }
     setVisit(lesson, isPresent) {
-        this._visits[lesson] = isPresent;
+        this._visits.push([lesson, isPresent]);
     }
     getPerformanceRating() {
         const gradeValues = Object.values(this._grades);
         if (gradeValues.length === 0)
             return 0;
         const averageGrade = gradeValues.reduce((sum, grade) => sum + grade, 0) / gradeValues.length;
-        const attendancePercentage = (Object.values(this._visits).filter(visit => !!visit).length / Object.keys(this._visits).length) * 100;
+        const attendancePercentage = (this._visits.filter(el => !!el[1]).length / this._visits.length) * 100;
         return (averageGrade + attendancePercentage) / 2;
     }
 }
