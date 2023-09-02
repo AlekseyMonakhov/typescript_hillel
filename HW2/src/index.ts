@@ -155,21 +155,21 @@ class Student implements StudentInterface {
   private _visits: Record<string, boolean> = {}; // danger -key should be unic
 
   get fullName(): string {
-    return `${this.lastName} ${this.firstName}`;
+    return `${this._lastName} ${this._firstName}`;
   }
 
   set fullName(value: string) {
-    [this.lastName, this.firstName] = value.split(' ');
+    [this._lastName, this._firstName] = value.split(' ');
   }
 
   get age(): number {
-    return new Date().getFullYear() - this.birthYear;
+    return new Date().getFullYear() - this._birthYear;
   }
 
   constructor(
-    private firstName: string,
-    private lastName: string,
-    private birthYear: number
+    private _firstName: string,
+    private _lastName: string,
+    private _birthYear: number
   ) {}
 
   setGrade(subject: SUBJECTS, grade: number): void {

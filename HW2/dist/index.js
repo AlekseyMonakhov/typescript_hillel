@@ -112,9 +112,9 @@ class Group {
     }
 }
 class Student {
-    firstName;
-    lastName;
-    birthYear;
+    _firstName;
+    _lastName;
+    _birthYear;
     _grades = {
         ["BACK_END" /* SUBJECTS.BACK_END */]: 0,
         ["CSHARP" /* SUBJECTS.CSHARP */]: 0,
@@ -122,20 +122,20 @@ class Student {
         ["TYPESCRIPT" /* SUBJECTS.TYPESCRIPT */]: 0,
         ["FRONT_END" /* SUBJECTS.FRONT_END */]: 0,
     };
-    _visits = {};
+    _visits = {}; // danger -key should be unic
     get fullName() {
-        return `${this.lastName} ${this.firstName}`;
+        return `${this._lastName} ${this._firstName}`;
     }
     set fullName(value) {
-        [this.lastName, this.firstName] = value.split(' ');
+        [this._lastName, this._firstName] = value.split(' ');
     }
     get age() {
-        return new Date().getFullYear() - this.birthYear;
+        return new Date().getFullYear() - this._birthYear;
     }
-    constructor(firstName, lastName, birthYear) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthYear = birthYear;
+    constructor(_firstName, _lastName, _birthYear) {
+        this._firstName = _firstName;
+        this._lastName = _lastName;
+        this._birthYear = _birthYear;
     }
     setGrade(subject, grade) {
         this._grades[subject] = grade;
