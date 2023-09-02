@@ -1,132 +1,154 @@
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class Area {
+    _name;
+    _level = [];
+    get name() {
+        return this._name;
     }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-var School = /** @class */ (function () {
-    function School() {
-        this.directions = [];
+    get level() {
+        return this._level;
     }
-    School.prototype.addDirection = function (direction) {
-        this.directions.push(direction);
-    };
-    return School;
-}());
-var Direction = /** @class */ (function () {
-    function Direction(_name) {
+    constructor(_name) {
         this._name = _name;
-        this.levels = [];
     }
-    Object.defineProperty(Direction.prototype, "name", {
-        get: function () {
-            return this._name;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Direction.prototype.addLevel = function (level) {
+    addLevel(level) {
+        this._level.push(level);
+    }
+    removeLevel(level) {
+        this._level = this._level.filter(levelItem => levelItem.name !== level.name);
+    }
+}
+class School {
+    directions = [];
+    _areas = [];
+    _lectures = [];
+    get areas() {
+        return this._areas;
+    }
+    get lecturers() {
+        return this._lectures;
+    }
+    addDirection(direction) {
+        this.directions.push(direction);
+    }
+    addArea(area) {
+        this._areas.push(area);
+    }
+    removeArea(area) {
+        this._areas = this._areas.filter(areaItem => areaItem.name !== area.name);
+    }
+    addLecture(lecutre) {
+        this._lectures.push(lecutre);
+    }
+    removeLecture(lecture) {
+        this._lectures = this._lectures.filter(lectureItem => lectureItem !== lecture);
+    }
+}
+class Direction {
+    _name;
+    levels = [];
+    get name() {
+        return this._name;
+    }
+    constructor(_name) {
+        this._name = _name;
+    }
+    addLevel(level) {
         this.levels.push(level);
-    };
-    return Direction;
-}());
-var Level = /** @class */ (function () {
-    function Level(_name, _program) {
+    }
+}
+class Level {
+    _name;
+    _program;
+    _groups = [];
+    get name() {
+        return this._name;
+    }
+    get program() {
+        return this._program;
+    }
+    constructor(_name, _program) {
         this._name = _name;
         this._program = _program;
-        this.groups = [];
     }
-    Object.defineProperty(Level.prototype, "name", {
-        get: function () {
-            return this._name;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Level.prototype, "program", {
-        get: function () {
-            return this._program;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Level.prototype.addGroup = function (group) {
-        this.groups.push(group);
-    };
-    return Level;
-}());
-var Group = /** @class */ (function () {
-    function Group(directionName, levelName) {
+    addGroup(group) {
+        this._groups.push(group);
+    }
+    removeGroup(group) {
+        this._groups = this._groups.filter(groupItem => groupItem !== group); //danger, need to add id to group
+    }
+}
+class Group {
+    directionName;
+    levelName;
+    _students = [];
+    _area = new Area('AreaTest');
+    _status = '';
+    get students() {
+        return this._students;
+    }
+    get area() {
+        return this._area;
+    }
+    get status() {
+        return this._status;
+    }
+    set status(value) {
+        this._status = value;
+    }
+    constructor(directionName, levelName) {
         this.directionName = directionName;
         this.levelName = levelName;
-        this._students = [];
     }
-    Object.defineProperty(Group.prototype, "students", {
-        get: function () {
-            return this._students;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Group.prototype.addStudent = function (student) {
+    addStudent(student) {
         this._students.push(student);
+    }
+    removeStudent(student) {
+        this._students = this._students.filter(studentItem => studentItem.fullName !== student.fullName);
+    }
+    showPerformance() {
+        return [...this._students].sort((a, b) => b.getPerformanceRating() - a.getPerformanceRating());
+    }
+}
+class Student {
+    firstName;
+    lastName;
+    birthYear;
+    _grades = {
+        ["BACK_END" /* SUBJECTS.BACK_END */]: 0,
+        ["CSHARP" /* SUBJECTS.CSHARP */]: 0,
+        ["DEVOPS" /* SUBJECTS.DEVOPS */]: 0,
+        ["TYPESCRIPT" /* SUBJECTS.TYPESCRIPT */]: 0,
+        ["FRONT_END" /* SUBJECTS.FRONT_END */]: 0,
     };
-    Group.prototype.showPerformance = function () {
-        return __spreadArray([], this._students, true).sort(function (a, b) { return b.getPerformanceRating() - a.getPerformanceRating(); });
-    };
-    return Group;
-}());
-var Student = /** @class */ (function () {
-    function Student(firstName, lastName, birthYear) {
-        var _a;
+    _visits = {};
+    get fullName() {
+        return `${this.lastName} ${this.firstName}`;
+    }
+    set fullName(value) {
+        [this.lastName, this.firstName] = value.split(' ');
+    }
+    get age() {
+        return new Date().getFullYear() - this.birthYear;
+    }
+    constructor(firstName, lastName, birthYear) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthYear = birthYear;
-        this.grades = (_a = {},
-            _a["BACK_END" /* SUBJECTS.BACK_END */] = 0,
-            _a["CSHARP" /* SUBJECTS.CSHARP */] = 0,
-            _a["DEVOPS" /* SUBJECTS.DEVOPS */] = 0,
-            _a["TYPESCRIPT" /* SUBJECTS.TYPESCRIPT */] = 0,
-            _a["FRONT_END" /* SUBJECTS.FRONT_END */] = 0,
-            _a);
-        this.attendance = [];
     }
-    Object.defineProperty(Student.prototype, "fullName", {
-        get: function () {
-            return "".concat(this.lastName, " ").concat(this.firstName);
-        },
-        set: function (value) {
-            var _a;
-            _a = value.split(" "), this.lastName = _a[0], this.firstName = _a[1];
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Student.prototype, "age", {
-        get: function () {
-            return new Date().getFullYear() - this.birthYear;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Student.prototype.setGrade = function (subject, grade) {
-        this.grades[subject] = grade;
-    };
-    Student.prototype.markAttendance = function (present) {
-        this.attendance.push(present);
-    };
-    Student.prototype.getPerformanceRating = function () {
-        var gradeValues = Object.values(this.grades);
+    setGrade(subject, grade) {
+        this._grades[subject] = grade;
+    }
+    setVisit(lesson, isPresent) {
+        this._visits[lesson] = isPresent;
+    }
+    getPerformanceRating() {
+        const gradeValues = Object.values(this._grades);
         if (gradeValues.length === 0)
             return 0;
-        var averageGrade = gradeValues.reduce(function (sum, grade) { return sum + grade; }, 0) /
-            gradeValues.length;
-        var attendancePercentage = (this.attendance.filter(function (present) { return present; }).length / this.attendance.length) * 100;
+        const averageGrade = gradeValues.reduce((sum, grade) => sum + grade, 0) / gradeValues.length;
+        const attendancePercentage = (Object.values(this._visits).filter(visit => !!visit).length / Object.keys(this._visits).length) * 100;
         return (averageGrade + attendancePercentage) / 2;
-    };
-    return Student;
-}());
-export {};
+    }
+}

@@ -1,42 +1,7 @@
-import {DIRECTIONS, LEVELS, SUBJECTS} from "../constants";
-
-export interface SchoolInerface {
-    directions: DIRECTIONS[],
-
-    addDirection(direction: DIRECTIONS): void,
-}
-
-export interface DirectionInterface {
-    levels: LEVELS[],
-    name: string,
-
-    addLevel(level: LEVELS): void
-}
-
-
-export interface LevelInterface {
-    name: string,
-    program:string,
-    addGroup(group: GroupInterface):void
-}
-
-export interface GroupInterface {
-    students: Array<StudentInterface>,
-
-    addStudent(student: StudentInterface): void,
-
-    showPerformance(): Array<StudentInterface>,
-}
-
-export interface StudentInterface {
-    grades: Record<SUBJECTS, number>,
-    attendance: string[],
-    fullName: string,
-    age: number,
-
-    setGrade(subject: SUBJECTS, grade: number): void,
-
-    markAttendance(present: string): void,
-
-    getPerformanceRating(): number;
-}
+export { AreaInterface } from './Area';
+export { DirectionInterface } from './Directions';
+export { GroupInterface } from './Group';
+export { LecturesInterface } from './Lecture';
+export { LevelInterface } from './Level';
+export { SchoolInerface } from './School';
+export { StudentInterface } from './Student';
