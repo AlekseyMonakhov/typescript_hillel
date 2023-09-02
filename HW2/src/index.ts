@@ -61,7 +61,7 @@ class School implements SchoolInerface {
   }
 
   removeLecture(lecture: LecturesInterface): void {
-    this._lectures = this._lectures.filter(lectureItem => lectureItem !== lecture);
+    this._lectures = this._lectures.filter(lectureItem => lectureItem.name !== lecture.name);
   }
 }
 

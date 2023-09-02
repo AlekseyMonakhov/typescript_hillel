@@ -42,7 +42,7 @@ class School {
         this._lectures.push(lecutre);
     }
     removeLecture(lecture) {
-        this._lectures = this._lectures.filter(lectureItem => lectureItem !== lecture);
+        this._lectures = this._lectures.filter(lectureItem => lectureItem.name !== lecture.name);
     }
 }
 class Direction {
