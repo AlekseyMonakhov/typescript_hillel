@@ -152,7 +152,7 @@ class Student implements StudentInterface {
     [SUBJECTS.FRONT_END]: 0,
   };
 
-  private _visits: Record<string, boolean> = {};
+  private _visits: Record<string, boolean> = {}; // danger -key should be unic
 
   get fullName(): string {
     return `${this.lastName} ${this.firstName}`;
