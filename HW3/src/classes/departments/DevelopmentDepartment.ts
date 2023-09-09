@@ -1,21 +1,20 @@
 import { DEPARTMENTS } from '../../constants/Departments';
+import { Budjet } from '../../types/Budjet';
 import { CompanyMemberInterface } from '../../types/Employees/CompanyMember';
 import { DevelopmentDepartmentInterface } from '../../types/departments/DevelopmentDepartmentInterface';
 import { Department } from './Department';
 
 export class DevelopmentDepartment extends Department implements DevelopmentDepartmentInterface {
   constructor(
-    public budjet: number,
-    public credit: number,
-    public debit: number,
+    public budjet: Budjet,
     public domainArea: string,
     public membersList: CompanyMemberInterface[],
     public name: DEPARTMENTS
   ) {
-    super(budjet, credit, debit, domainArea, membersList, name);
+    super(budjet, domainArea, membersList, name);
   }
 
-  getBalance(): number {
+  getBalance(): Budjet {
     return this.budjet;
   }
 }

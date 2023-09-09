@@ -7,18 +7,17 @@ import { Department } from './Department';
 import { BalanceInterface } from '../../types/Balance';
 import { isCompanyMember, isDepartment, isEmployee, isIntern } from '../../typeGuards';
 import { WORK_STATUS } from '../../constants/WorkStatuses';
+import { Budjet } from '../../types/Budjet';
 
 export class AccoutingDepartment extends Department implements AccountingInterface {
   constructor(
-    public budjet: number,
-    public credit: number,
-    public debit: number,
+    public budjet: Budjet,
     public domainArea: string,
     public membersList: CompanyMemberInterface[],
     public name: DEPARTMENTS,
     public balance: BalanceInterface
   ) {
-    super(budjet, credit, debit, domainArea, membersList, name);
+    super(budjet, domainArea, membersList, name);
   }
 
   addToBalance(unit: DepartmentInterface | EmployeeInterface): void {

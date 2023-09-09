@@ -22,3 +22,7 @@ export function isIntern(item: unknown): item is InternInterface {
 export function isCompanyMember(item: unknown): item is CompanyMemberInterface {
   return item instanceof CompanyMember;
 }
+
+function isStringAsserts(item: unknown): asserts item is string {
+  if (typeof item !== 'string') throw new Error('Not string');
+}

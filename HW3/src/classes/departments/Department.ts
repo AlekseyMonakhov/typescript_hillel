@@ -1,6 +1,7 @@
 import { DEPARTMENTS } from '../../constants/Departments';
 import { WORK_STATUS } from '../../constants/WorkStatuses';
 import { isCompanyMember, isIntern } from '../../typeGuards';
+import { Budjet } from '../../types/Budjet';
 import { CompanyMemberInterface } from '../../types/Employees/CompanyMember';
 import { InternInterface } from '../../types/Employees/Intern';
 import { DepartmentInterface } from '../../types/departments/Department';
@@ -8,15 +9,15 @@ import { DepartmentInterface } from '../../types/departments/Department';
 export class Department implements DepartmentInterface {
   id: string = (Math.random() + 1).toString(36);
   constructor(
-    public budjet: number,
-    public credit: number,
-    public debit: number,
+    public budjet: Budjet,
     public domainArea: string,
     public membersList: CompanyMemberInterface[],
     public name: DEPARTMENTS
   ) {}
 
   addMember(member: InternInterface | CompanyMemberInterface): void {
+    this.budjet.credit += member.sallary;
+
     if (isIntern(member)) {
       this.membersList.push({
         id: member.id,
@@ -36,6 +37,8 @@ export class Department implements DepartmentInterface {
   }
 
   removeMember(member: CompanyMemberInterface): void {
+    this.budjet.credit -= member.sallary;
+
     this.membersList = this.membersList.filter(department_member => department_member.id !== member.id);
   }
 }

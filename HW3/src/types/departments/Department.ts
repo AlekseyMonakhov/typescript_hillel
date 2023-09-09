@@ -1,4 +1,5 @@
 import { DEPARTMENTS } from '../../constants/Departments';
+import { Budjet } from '../Budjet';
 import { CompanyMemberInterface } from '../Employees/CompanyMember';
 import { EmployeeInterface } from '../Employees/Employee';
 
@@ -7,9 +8,7 @@ export interface DepartmentInterface {
   id: string;
   domainArea: string;
   membersList: CompanyMemberInterface[];
-  debit: number;
-  credit: number;
-  budjet: number;
+  budjet: Budjet;
 
   addMember(member: EmployeeInterface): void;
 
