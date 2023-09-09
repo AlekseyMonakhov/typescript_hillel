@@ -1,0 +1,5 @@
+export const enum WORK_STATUS {
+  ACTIVE = 'ACTIVE',
+  NOT_ACTIVE = 'NOT_ACTIVE',
+  UNPAID_LEAVE = 'UNPAID_LEAVE',
+}
