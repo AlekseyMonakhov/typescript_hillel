@@ -6,25 +6,22 @@ interface ICalculator {
 }
 
 class Calculator implements ICalculator {
-  constructor(
-    public firstOperand: number,
-    public secondOperand: number
-  ) {}
+
 
   add(firstOperand: number, secondOperand: number): number {
-    return this.firstOperand + this.secondOperand;
+    return firstOperand + secondOperand;
   }
 
   minus(firstOperand: number, secondOperand: number): number {
-    return this.firstOperand - this.secondOperand;
+    return firstOperand - secondOperand;
   }
 
   multiply(firstOperand: number, secondOperand: number): number {
-    return this.firstOperand * this.secondOperand;
+    return firstOperand * secondOperand;
   }
 
   devide(firstOperand: number, secondOperand: number): number {
-    return this.firstOperand / this.secondOperand;
+    return firstOperand / secondOperand;
   }
 }
 
