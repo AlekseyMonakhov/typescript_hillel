@@ -43,9 +43,14 @@ interface IAuthor {
   };
 }
 
-function isObject(value: unknown): asserts value is object {
-  if (typeof value !== 'object') throw new Error('wrong type');
+
+function notNil<T>(value: T | undefined | null): asserts value is T {
+
+  if (value === null || value === undefined) {
+    throw new Error(`Expected value to be: not nil, but got: ${value}`);
+  }
 }
+
 
 interface IBookService {
   getAuthorByLastName(name: string): IAuthor;
@@ -63,7 +68,7 @@ class BookServise implements IBookService {
 
   getAuthorByBook(book: IBook): IAuthor {
     const author = this.authors.find(author => author.books[book.bookName]);
-    isObject(author);
+    notNil(author);
 
     return author;
   }
@@ -71,7 +76,7 @@ class BookServise implements IBookService {
   getAuthorByLastName(lastname: string): IAuthor {
     const author = this.authors.find(author => author.lastName === lastname);
 
-    isObject(author);
+    notNil(author);
 
     return author;
   }
@@ -79,7 +84,7 @@ class BookServise implements IBookService {
   getBookByAuthor(author: IAuthor): IBook {
     const book = this.books.find(book => book.author.lastName === author.lastName);
 
-    isObject(book);
+    notNil(book);
 
     return book;
   }
@@ -87,7 +92,7 @@ class BookServise implements IBookService {
   getBookByName(name: string): IBook {
     const book = this.books.find(book => book.bookName === name);
 
-    isObject(book);
+    notNil(book);
 
     return book;
   }
