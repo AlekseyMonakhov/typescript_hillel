@@ -6,8 +6,6 @@ interface ICalculator {
 }
 
 class Calculator implements ICalculator {
-
-
   add(firstOperand: number, secondOperand: number): number {
     return firstOperand + secondOperand;
   }
@@ -43,14 +41,11 @@ interface IAuthor {
   };
 }
 
-
 function notNil<T>(value: T | undefined | null): asserts value is T {
-
   if (value === null || value === undefined) {
     throw new Error(`Expected value to be: not nil, but got: ${value}`);
   }
 }
-
 
 interface IBookService {
   getAuthorByLastName(name: string): IAuthor;
@@ -67,7 +62,7 @@ class BookServise implements IBookService {
   ) {}
 
   getAuthorByBook(book: IBook): IAuthor {
-    const author = this.authors.find(author => author.books[book.bookName]);
+    const author = this.authors.find(author => author.books[book.bookName].bookName === book.bookName);
     notNil(author);
 
     return author;
