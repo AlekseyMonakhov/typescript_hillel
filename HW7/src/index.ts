@@ -1,4 +1,4 @@
-interface Ifirst {
+interface IFirst {
     [key: string]: number | string;
 }
 
@@ -18,12 +18,12 @@ interface IFourth {
     [key: string]: string
 }
 
-interface IFiveth extends Ifirst {
+interface IFiveth extends IFirst {
     name: string
     age: number;
 }
 
 
-function areValuesNumbers(obj: Ifirst): boolean {
+function areValuesNumbers(obj: IFirst): boolean {
     return Object.values(obj).every((el) => typeof el === 'number')
 }
