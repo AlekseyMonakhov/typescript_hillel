@@ -7,9 +7,7 @@ interface ISecond {
 }
 
 interface IThird {
-    [key: string]: {
-        [key: number]: string
-    }
+    [key: number]: string
 }
 
 interface IFourth {
