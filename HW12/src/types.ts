@@ -7,7 +7,9 @@ export interface IFilm {
   name: string;
   year: number;
   rating: number;
-  awards: IAward[];
+  awards: {
+    [name: string]: IAward;
+  };
 }
 
 export interface ICategorie {

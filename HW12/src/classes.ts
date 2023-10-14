@@ -5,7 +5,7 @@ export class Film implements IFilm {
     public name: string,
     public year: number,
     public rating: number,
-    public awards: IAward[]
+    public awards: { [name: string]: IAward }
   ) {}
 }
 
@@ -22,7 +22,7 @@ abstract class IList<T extends IFilm | ICategorie> {
     protected filterState: T extends IFilm ? IFilmFilterState : IBaseFilterState
   ) {}
 
-  abstract getByName(name: string): T | undefined;
+  abstract getByName(): T | undefined;
 }
 
 export class CategoriesList extends IList<ICategorie> {
@@ -35,7 +35,13 @@ export class CategoriesList extends IList<ICategorie> {
   }
 
   getByName(): ICategorie | undefined {
-    return this.items.find(categorie => categorie.name === this.filterState.nameFilter?.filter);
+    const { nameFilter } = this.filterState;
+
+    if (nameFilter) {
+      return this.items.find(categorie => categorie.name === nameFilter.filter);
+    }
+
+    return;
   }
 }
 
@@ -49,7 +55,13 @@ export class FilmesList extends IList<IFilm> {
   }
 
   getByName(): IFilm | undefined {
-    return this.items.find(film => film.name === this.filterState.nameFilter?.filter);
+    const { nameFilter } = this.filterState;
+
+    if (nameFilter) {
+      return this.items.find(film => film.name === nameFilter.filter);
+    }
+
+    return;
   }
 
   getByYear(): IFilm[] | undefined {
@@ -76,8 +88,10 @@ export class FilmesList extends IList<IFilm> {
     const { awardsFilter } = this.filterState;
 
     if (awardsFilter) {
-      return this.items.filter(film =>
-        film.awards.some(award => award.name === awardsFilter.values.name && award.year === awardsFilter.values.year)
+      return this.items.filter(
+        film =>
+          film.awards[awardsFilter.values.name].name === awardsFilter.values.name &&
+          film.awards[awardsFilter.values.name].year === awardsFilter.values.year
       );
     }
 
