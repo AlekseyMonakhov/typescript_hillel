@@ -4,7 +4,8 @@ export declare class Note implements INote {
     readonly createdAt: Date;
     updatedAt: Date;
     state: INoteState;
-    constructor(title: string, content: string);
+    constructor(state: INoteState);
     private updateUpdatedAt;
     updateState(updatedProps: Partial<INoteState>): void;
+    changeCompleted(): void;
 }

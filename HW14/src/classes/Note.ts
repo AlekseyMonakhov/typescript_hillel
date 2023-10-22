@@ -21,6 +21,7 @@ export class Note implements INote {
   }
 
   changeCompleted(): void {
+    this.updateUpdatedAt();
     this.updateState({ completed: !this.state.completed });
   }
 }

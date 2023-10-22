@@ -1,4 +1,4 @@
-import { INote, INoteState, ITodoList, IUser } from '../types';
+import { INote, INoteState, ITodoList, ITodoListSerchable, ITodoListSortabe, IUser } from '../types';
 export declare class TodoList implements ITodoList {
     user: IUser;
     readonly id: string;
@@ -9,9 +9,16 @@ export declare class TodoList implements ITodoList {
     editNoteById(id: string, body: Partial<INoteState>): void;
     getNoteById(id: string): INote | undefined;
     getAllNotes(): INote[];
-    getNotesByTitle(title: string): INote[];
     getCompletedNotesLength(): number;
     getUncompletedNotesLength(): number;
+}
+export declare class TodoListSearchable extends TodoList implements ITodoListSerchable {
+    constructor(user: IUser);
+    getNotesByTitle(title: string): INote[];
+    getNotesByContent(content: string): INote[];
+}
+export declare class TodoListSortable extends TodoList implements ITodoListSortabe {
+    constructor(user: IUser);
     sortNotesByCreatedAt(): void;
     sortNoteByCompleted(): void;
 }

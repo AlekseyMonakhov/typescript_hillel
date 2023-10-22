@@ -9,6 +9,7 @@ export interface INote {
     updatedAt: Date;
     state: INoteState;
     updateState(updatedProps: Partial<INoteState>): void;
+    changeCompleted(): void;
 }
 export interface INoteConfirm extends INote {
     areChangesApproved: boolean;
@@ -26,9 +27,14 @@ export interface ITodoList {
     editNoteById(id: string, body: Partial<INoteState>): void;
     getNoteById(id: string): INote | undefined;
     getAllNotes(): INote[];
-    getNotesByTitle(title: string): INote[];
     getCompletedNotesLength(): number;
     getUncompletedNotesLength(): number;
+}
+export interface ITodoListSortabe extends ITodoList {
     sortNotesByCreatedAt(): void;
     sortNoteByCompleted(): void;
+}
+export interface ITodoListSerchable extends ITodoList {
+    getNotesByTitle(title: string): INote[];
+    getNotesByContent(content: string): INote[];
 }
