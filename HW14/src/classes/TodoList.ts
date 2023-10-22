@@ -1,4 +1,4 @@
-import { INote, INoteState, ITodoList, IUser } from '../types';
+import { INote, INoteState, ITodoList, ITodoListSerchable, ITodoListSortabe, IUser } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 
 export class TodoList implements ITodoList {
@@ -31,16 +31,32 @@ export class TodoList implements ITodoList {
     return Array.from(this.notes.values());
   }
 
-  getNotesByTitle(title: string): INote[] {
-    return this.getAllNotes().filter(note => note.state.title === title);
-  }
-
   getCompletedNotesLength(): number {
     return this.getAllNotes().filter(note => note.state.completed).length;
   }
 
   getUncompletedNotesLength(): number {
     return this.getAllNotes().filter(note => !note.state.completed).length;
+  }
+}
+
+export class TodoListSearchable extends TodoList implements ITodoListSerchable {
+  constructor(user: IUser) {
+    super(user);
+  }
+
+  getNotesByTitle(title: string): INote[] {
+    return this.getAllNotes().filter(note => note.state.title === title);
+  }
+
+  getNotesByContent(content: string): INote[] {
+    return this.getAllNotes().filter(note => note.state.content === content);
+  }
+}
+
+export class TodoListSortable extends TodoList implements ITodoListSortabe {
+  constructor(user: IUser) {
+    super(user);
   }
 
   sortNotesByCreatedAt(): void {

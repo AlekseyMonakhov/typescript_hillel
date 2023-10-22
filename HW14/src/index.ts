@@ -1,8 +1,9 @@
 import { Note, NoteConfirm, TodoList, User } from './classes';
+import { NoteState } from './classes/NoteState';
 
 const user = new User('John Doe');
-const note = new Note('Title', 'Content');
-const noteConfirm = new NoteConfirm('Title', 'Content');
+const note = new Note(new NoteState('Title', 'Content'));
+const noteConfirm = new NoteConfirm(new NoteState('Title', 'Content'));
 const list = new TodoList(user);
 
 list.addNote(noteConfirm);

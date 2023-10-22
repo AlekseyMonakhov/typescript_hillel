@@ -1,5 +1,4 @@
 import { INote, INoteState } from '../types';
-import { NoteState } from './NoteState';
 import { v4 as uuidv4 } from 'uuid';
 
 export class Note implements INote {
@@ -8,8 +7,8 @@ export class Note implements INote {
   updatedAt: Date = new Date();
   state: INoteState;
 
-  constructor(title: string, content: string) {
-    this.state = new NoteState(title, content);
+  constructor(state: INoteState) {
+    this.state = state;
   }
 
   private updateUpdatedAt(): void {
@@ -19,5 +18,9 @@ export class Note implements INote {
   updateState(updatedProps: Partial<INoteState>): void {
     this.updateUpdatedAt();
     this.state = Object.assign(this.state, updatedProps);
+  }
+
+  changeCompleted(): void {
+    this.updateState({ completed: !this.state.completed });
   }
 }

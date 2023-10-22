@@ -9,19 +9,15 @@ export class NoteConfirm extends Note implements INoteConfirm {
   }
 
   get areChangesApproved(): boolean {
+    this.areChangesApproved = confirm('Are you sure you want to change the content of the note?');
     return this._areChangesApproved;
   }
 
-  constructor(
-    public title: string,
-    public content: string
-  ) {
-    super(title, content);
+  constructor(state: INoteState) {
+    super(state);
   }
 
   override updateState(updatedProps: Partial<INoteState>): void {
-    this.areChangesApproved = confirm('Are you sure you want to change the content of the note?');
-
     if (this.areChangesApproved) {
       super.updateState(updatedProps);
     }
