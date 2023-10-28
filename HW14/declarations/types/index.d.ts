@@ -8,11 +8,14 @@ export interface INote {
     readonly createdAt: Date;
     updatedAt: Date;
     state: INoteState;
+}
+export interface INoteEditable extends INote {
     updateState(updatedProps: Partial<INoteState>): void;
     changeCompleted(): void;
 }
 export interface INoteConfirm extends INote {
-    areChangesApproved: boolean;
+    updateState(updatedProps: Partial<INoteState>, isConfirmed: boolean): void;
+    changeCompleted(isConfirmed: boolean): void;
 }
 export interface IUser {
     readonly id: string;

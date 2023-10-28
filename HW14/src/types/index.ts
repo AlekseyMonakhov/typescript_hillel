@@ -8,16 +8,20 @@ export interface INote {
   readonly id: string;
   readonly createdAt: Date;
   updatedAt: Date;
-
   state: INoteState;
+}
 
+export interface INoteEditable extends INote {
   updateState(updatedProps: Partial<INoteState>): void;
   changeCompleted(): void;
 }
 
 export interface INoteConfirm extends INote {
-  areChangesApproved: boolean;
+  updateState(updatedProps: Partial<INoteState>, isConfirmed: boolean): void;
+  changeCompleted(isConfirmed: boolean): void;
 }
+
+export type INoteUnionType = INoteEditable | INoteConfirm;
 
 export interface IUser {
   readonly id: string;
@@ -27,7 +31,6 @@ export interface IUser {
 export interface ITodoList {
   readonly id: string;
   user: IUser;
-  notes: Map<string, INote>;
 
   addNote(note: INote): void;
   removeNoteById(id: string): void;
@@ -38,12 +41,12 @@ export interface ITodoList {
   getUncompletedNotesLength(): number;
 }
 
-export interface ITodoListSortabe extends ITodoList {
+export interface ITodoListSortable extends ITodoList {
   sortNotesByCreatedAt(): void;
   sortNoteByCompleted(): void;
 }
 
-export interface ITodoListSerchable extends ITodoList {
+export interface ITodoListSearchable extends ITodoList {
   getNotesByTitle(title: string): INote[];
   getNotesByContent(content: string): INote[];
 }
