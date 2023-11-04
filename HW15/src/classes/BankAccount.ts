@@ -1,5 +1,6 @@
 import { CurrencyTypesEnum } from '../constants';
 import { IBankAccount, IBankClient, IComand, ICurrencyConversionStrategy } from '../types';
+import { Bank } from './Bank';
 import { CommandProcessor, DepositCommand, WithdrawCommand } from './Command';
 import { Observable } from './Observable';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,7 +11,7 @@ export class BankAccount extends Observable implements IBankAccount {
   private _balance = 0;
   private _holder: IBankClient;
   private _conversionStrategy: ICurrencyConversionStrategy;
-  private _commandProcessor = new CommandProcessor();
+  private _bank = Bank.getInstance();
 
   public get number(): string {
     return this._number;
@@ -39,31 +40,19 @@ export class BankAccount extends Observable implements IBankAccount {
     this._conversionStrategy = conversionStrategy;
   }
 
-  private queueTransaction(transaction: IComand): void {
-    this._commandProcessor.queueTransaction(transaction);
-  }
-
-  private processTransaction(transactionId: string): void {
-    this._commandProcessor.processTransaction(transactionId);
-  }
-
-  private processTransactions(): void {
-    this._commandProcessor.processTransactions();
-  }
-
   public undoTransaction(transactionId: string): void {
-    this._commandProcessor.undoTransaction(transactionId);
+    this._bank.undoTransaction(transactionId);
   }
 
   public redoTransaction(transactionId: string): void {
-    this._commandProcessor.redoTransaction(transactionId);
+    this._bank.redoTransaction(transactionId);
   }
 
   public deposite(amount: number): string | never {
     const transaction = new DepositCommand(this, amount);
-    this.queueTransaction(transaction);
+    this._bank.queueTransaction(transaction);
 
-    this.processTransaction(transaction.id);
+    this._bank.processTransaction(transaction.id);
     this.notify();
 
     return transaction.id;
@@ -72,9 +61,9 @@ export class BankAccount extends Observable implements IBankAccount {
   public withdraw(amount: number, currency: CurrencyTypesEnum): string | never {
     const transaction = new WithdrawCommand(this, amount, currency);
 
-    this.queueTransaction(transaction);
+    this._bank.queueTransaction(transaction);
 
-    this.processTransaction(transaction.id);
+    this._bank.processTransaction(transaction.id);
     this.notify();
 
     return transaction.id;

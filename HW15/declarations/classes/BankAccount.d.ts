@@ -7,16 +7,13 @@ export declare class BankAccount extends Observable implements IBankAccount {
     private _balance;
     private _holder;
     private _conversionStrategy;
-    private _commandProcessor;
+    private _bank;
     get number(): string;
     get balance(): number;
     set conversionStrategy(strategy: ICurrencyConversionStrategy);
     get conversionStrategy(): ICurrencyConversionStrategy;
     get holder(): IBankClient;
     constructor(client: IBankClient, currency: CurrencyTypesEnum, conversionStrategy: ICurrencyConversionStrategy);
-    private queueTransaction;
-    private processTransaction;
-    private processTransactions;
     undoTransaction(transactionId: string): void;
     redoTransaction(transactionId: string): void;
     deposite(amount: number): string | never;

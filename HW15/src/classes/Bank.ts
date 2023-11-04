@@ -1,10 +1,12 @@
 import { CurrencyTypesEnum } from '../constants';
-import { IBank, IBankClient, ICurrencyConversionStrategy } from '../types';
+import { IBank, IBankClient, IComand, ICurrencyConversionStrategy } from '../types';
 import { BankAccount } from './BankAccount';
+import { CommandProcessor } from './Command';
 
 export class Bank implements IBank {
   private static instance: Bank;
   private accounts: Map<string, BankAccount> = new Map();
+  private _commandProcessor = new CommandProcessor();
 
   private constructor() {}
 
@@ -14,6 +16,26 @@ export class Bank implements IBank {
     }
 
     return Bank.instance;
+  }
+
+  public queueTransaction(transaction: IComand): void {
+    this._commandProcessor.queueTransaction(transaction);
+  }
+
+  public processTransaction(transactionId: string): void {
+    this._commandProcessor.processTransaction(transactionId);
+  }
+
+  public processTransactions(): void {
+    this._commandProcessor.processTransactions();
+  }
+
+  public undoTransaction(transactionId: string): void {
+    this._commandProcessor.undoTransaction(transactionId);
+  }
+
+  public redoTransaction(transactionId: string): void {
+    this._commandProcessor.redoTransaction(transactionId);
   }
 
   public createAccount(
