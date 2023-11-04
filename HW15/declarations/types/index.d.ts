@@ -18,3 +18,8 @@ export interface IBank {
     createAccount(client: IBankClient, currency: CurrencyTypesEnum, conversionStrategy: ICurrencyConversionStrategy): void;
     closeAccount(accountNumber: number): void;
 }
+export interface IComand {
+    id: string;
+    execute(): void;
+    undo(): void;
+}

@@ -28,3 +28,9 @@ export interface IBank {
 
   closeAccount(accountNumber: number): void;
 }
+
+export interface IComand {
+  id: string;
+  execute(): void;
+  undo(): void;
+}
