@@ -59,28 +59,24 @@ export class BankAccount extends Observable implements IBankAccount {
     this._commandProcessor.redoTransaction(transactionId);
   }
 
-  public deposite(amount: number): void {
+  public deposite(amount: number): string | never {
     const transaction = new DepositCommand(this, amount);
     this.queueTransaction(transaction);
 
-    try {
-      this.processTransaction(transaction.id);
-      this.notify();
-    } catch (e) {
-      console.log(e);
-    }
+    this.processTransaction(transaction.id);
+    this.notify();
+
+    return transaction.id;
   }
 
-  public withdraw(amount: number, currency: CurrencyTypesEnum): void {
+  public withdraw(amount: number, currency: CurrencyTypesEnum): string | never {
     const transaction = new WithdrawCommand(this, amount, currency);
 
     this.queueTransaction(transaction);
 
-    try {
-      this.processTransaction(transaction.id);
-      this.notify();
-    } catch (e) {
-      console.log(e);
-    }
+    this.processTransaction(transaction.id);
+    this.notify();
+
+    return transaction.id;
   }
 }

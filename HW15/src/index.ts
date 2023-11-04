@@ -33,4 +33,6 @@ bank.closeAccount(number);
 firstAcc.deposite(100);
 secondAcc.deposite(100);
 
-firstAcc.withdraw(50, CurrencyTypesEnum.EUR);
+const transactionId = firstAcc.withdraw(50, CurrencyTypesEnum.EUR);
+
+firstAcc.undoTransaction(transactionId);

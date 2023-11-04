@@ -20,8 +20,8 @@ export interface IBankAccount {
     readonly balance: number;
     readonly holder: IBankClient;
     conversionStrategy: ICurrencyConversionStrategy;
-    deposite(amount: number): void;
-    withdraw(amount: number, currency: CurrencyTypesEnum): void;
+    deposite(amount: number): string | never;
+    withdraw(amount: number, currency: CurrencyTypesEnum): string | never;
     undoTransaction(transactionId: string): void;
     redoTransaction(transactionId: string): void;
 }
