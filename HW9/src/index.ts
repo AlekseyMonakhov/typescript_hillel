@@ -13,3 +13,10 @@ type UpperCaseKeys<T extends object> = {
 type ObjectToPropertyDescriptor<T> = {
   [K in keyof T]: PropertyDescriptor;
 };
+
+
+var i = 0;
+(function(i) {
+  console.log(++i)
+})(i)
+console.log(i);
