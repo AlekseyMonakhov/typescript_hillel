@@ -1,17 +1,18 @@
 import { CurrencyTypesEnum } from '../constants';
-import { IBankClient, IComand, ICurrencyConversionStrategy } from '../types';
+import { IBankAccount, IBankClient, IComand, ICurrencyConversionStrategy } from '../types';
 import { CommandProcessor, DepositCommand, WithdrawCommand } from './Command';
 import { Observable } from './Observable';
+import { v4 as uuidv4 } from 'uuid';
 
-export class BankAccount extends Observable {
-  private readonly _number: number;
+export class BankAccount extends Observable implements IBankAccount {
+  private readonly _number: string = uuidv4();
   readonly currency: CurrencyTypesEnum;
   private _balance = 0;
   private _holder: IBankClient;
   private _conversionStrategy: ICurrencyConversionStrategy;
   private _commandProcessor = new CommandProcessor();
 
-  public get number(): number {
+  public get number(): string {
     return this._number;
   }
 
@@ -27,11 +28,14 @@ export class BankAccount extends Observable {
     return this._conversionStrategy;
   }
 
+  get holder(): IBankClient {
+    return this._holder;
+  }
+
   constructor(client: IBankClient, currency: CurrencyTypesEnum, conversionStrategy: ICurrencyConversionStrategy) {
     super();
     this.currency = currency;
     this._holder = client;
-    this._number = 1234343;
     this._conversionStrategy = conversionStrategy;
   }
 
@@ -39,11 +43,11 @@ export class BankAccount extends Observable {
     this._commandProcessor.queueTransaction(transaction);
   }
 
-  public processTransaction(transactionId: string): void {
+  private processTransaction(transactionId: string): void {
     this._commandProcessor.processTransaction(transactionId);
   }
 
-  public processTransactions(): void {
+  private processTransactions(): void {
     this._commandProcessor.processTransactions();
   }
 
@@ -53,10 +57,6 @@ export class BankAccount extends Observable {
 
   public redoTransaction(transactionId: string): void {
     this._commandProcessor.redoTransaction(transactionId);
-  }
-
-  public holder(): IBankClient {
-    return this._holder;
   }
 
   public deposite(amount: number): void {

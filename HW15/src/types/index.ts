@@ -19,14 +19,27 @@ export interface IObservable {
   notify(): void;
 }
 
+export interface IBankAccount {
+  readonly number: string;
+  readonly currency: CurrencyTypesEnum;
+  readonly balance: number;
+  readonly holder: IBankClient;
+  conversionStrategy: ICurrencyConversionStrategy;
+  deposite(amount: number): void;
+  withdraw(amount: number, currency: CurrencyTypesEnum): void;
+
+  undoTransaction(transactionId: string): void;
+  redoTransaction(transactionId: string): void;
+}
+
 export interface IBank {
   createAccount(
     client: IBankClient,
     currency: CurrencyTypesEnum,
     conversionStrategy: ICurrencyConversionStrategy
-  ): void;
+  ): IBankAccount;
 
-  closeAccount(accountNumber: number): void;
+  closeAccount(accountNumber: string): string;
 }
 
 export interface IComand {

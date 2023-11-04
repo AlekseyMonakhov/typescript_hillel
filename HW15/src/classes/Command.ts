@@ -54,10 +54,16 @@ export class CommandProcessor {
     this.transactionQueue.set(transaction.id, transaction);
   }
 
+  public confirmTransaction(): boolean {
+    return confirm('Confirm transaction?');
+  }
+
   public processTransaction(transactionId: string): void {
     const transaction = this.transactionQueue.get(transactionId);
 
     if (!transaction) throw new Error('Transaction not found');
+
+    if (!this.confirmTransaction()) return;
 
     transaction.execute();
     this.transactionHistory.set(transaction.id, transaction);
@@ -65,6 +71,8 @@ export class CommandProcessor {
   }
 
   public processTransactions(): void {
+    if (!this.confirmTransaction()) return;
+
     this.transactionQueue.forEach(transaction => {
       transaction.execute();
       this.transactionHistory.set(transaction.id, transaction);
@@ -77,6 +85,9 @@ export class CommandProcessor {
     const transaction = this.transactionHistory.get(transactionId);
 
     if (!transaction) throw new Error('Transaction not found');
+
+    if (!this.confirmTransaction()) return;
+
     transaction.undo();
     this.transactionHistory.delete(transaction.id);
   }
@@ -85,6 +96,8 @@ export class CommandProcessor {
     const transaction = this.transactionHistory.get(transactionId);
 
     if (!transaction) throw new Error('Transaction not found');
+
+    if (!this.confirmTransaction()) return;
     transaction.execute();
     this.transactionHistory.set(transaction.id, transaction);
   }

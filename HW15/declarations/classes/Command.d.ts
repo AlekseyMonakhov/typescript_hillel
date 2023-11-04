@@ -24,6 +24,7 @@ export declare class CommandProcessor {
     private transactionQueue;
     private transactionHistory;
     queueTransaction(transaction: IComand): void;
+    confirmTransaction(): boolean;
     processTransaction(transactionId: string): void;
     processTransactions(): void;
     undoTransaction(transactionId: string): void;
