@@ -1,4 +1,4 @@
-import { IObservable, IObserver } from '../types';
+import {IObservable, IObserver} from "../types";
 
 export abstract class Observable implements IObservable {
   private readonly observers: Set<IObserver> = new Set();
