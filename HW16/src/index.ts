@@ -39,7 +39,7 @@ for (let i = 0; i < 201; i++) {
 zoo.casa.closeShift();
 
 
-zoo.marketingDepartment.sendMessageToAllClients('Hello, dear clients!');
+zoo.marketingDepartment.sendEmail('123', 'Hello world');
 
 console.log(zoo.buchgalteryDepartment.getIncomeReport(new Date().toLocaleDateString(), new Date().toLocaleDateString()))
 
