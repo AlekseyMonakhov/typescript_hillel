@@ -1,4 +1,4 @@
-import { IAdminDepartment, IAnimal, IBuchgalteryDepartment, IEmployee } from "../../types";
+import { IAdminDepartment, IAnimal, IBuchgalteryDepartment, IEmployee, IMarketingDepartment } from "../../types";
 export declare class AdminDepartment implements IAdminDepartment {
     private animalsCollection;
     private employeesCollection;
@@ -15,9 +15,15 @@ export declare class BuchgalteryDepartment implements IBuchgalteryDepartment {
     addIncome(income: number): void;
     addOutcome(cost: number): void;
     getCurrentBudjet(): number;
-    getIncomeReport(startDate: number, endDate: number): Map<string, number>;
-    getOutcomeReport(startDate: number, endDate: number): Map<string, number>;
-    getBudjetReport(startDate: number, endDate: number): Map<string, number>;
+    getIncomeReport(startDate: string, endDate: string): Map<string, number>;
+    getOutcomeReport(startDate: string, endDate: string): Map<string, number>;
+    getBudjetReport(startDate: string, endDate: string): Map<string, number>;
     paySalaryById(employeeId: string): void;
     payAllSalary(): void;
+}
+export declare class MarketingDepartment implements IMarketingDepartment {
+    private clientsCollection;
+    sendEmail(email: string, message: string): void;
+    sendSMS(phone: string, message: string): void;
+    sendMessageToAllClients(message: string): void;
 }

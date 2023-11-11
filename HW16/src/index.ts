@@ -24,7 +24,7 @@ for (let i = 0; i < 20; i++) {
 }
 
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 201; i++) {
     zoo.casa.sellTicket({
             name: 'Leo' + i,
             age: 25,
@@ -38,6 +38,9 @@ for (let i = 0; i < 100; i++) {
 
 zoo.casa.closeShift();
 
-console.log(zoo.buchgalteryDepartment.getIncomeReport(Date.now(), Date.now()))
+
+zoo.marketingDepartment.sendMessageToAllClients('Hello, dear clients!');
+
+console.log(zoo.buchgalteryDepartment.getIncomeReport(new Date().toLocaleDateString(), new Date().toLocaleDateString()))
 
 console.log(zoo.buchgalteryDepartment.getCurrentBudjet())

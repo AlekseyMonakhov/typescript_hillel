@@ -20,7 +20,7 @@ export class ClientCollection implements IManageCollection<IRegisterClient>, ILi
   }
 
   getAll(): Map<string, IRegisterClient> {
-    return this.collection;
+    return new Map(this.collection);
   }
 
   delete(id: string): boolean | never {

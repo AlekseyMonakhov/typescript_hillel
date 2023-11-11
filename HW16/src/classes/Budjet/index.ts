@@ -3,24 +3,24 @@ import {Singleton} from "../../decorators";
 
 @Singleton
 export class Budjet implements IBudjet {
-    private budjet: Map<number, number> = new Map();
-    private income: Map<number, number> = new Map();
-    private outcome: Map<number, number> = new Map();
+    private budjet: Map<string, number> = new Map();
+    private income: Map<string, number> = new Map();
+    private outcome: Map<string, number> = new Map();
 
-    getIncome(): Map<number, number> {
+    getIncome(): Map<string, number> {
         return this.income;
     }
 
     setIncome(income: number): void {
-        this.income.set(Date.now(), income);
+        this.income.set(new Date().toLocaleDateString(), income);
     }
 
-    getOutcome(): Map<number, number> {
+    getOutcome(): Map<string, number> {
         return this.outcome;
     }
 
     setOutcome(outcome: number): void {
-        this.outcome.set(Date.now(), outcome);
+        this.outcome.set(new Date().toLocaleDateString(), outcome);
     }
 
     calcBudjet(): number {
@@ -28,11 +28,11 @@ export class Budjet implements IBudjet {
         const outcome = Array.from(this.outcome.values()).reduce((acc, value) => acc + value, 0);
         const budjet = income - outcome;
 
-        this.budjet.set(Date.now(), budjet);
+        this.budjet.set(new Date().toLocaleDateString(), budjet);
         return budjet;
     }
 
-    getBudjetHistory(): Map<number, number> {
+    getBudjetHistory(): Map<string, number> {
         return this.budjet;
     }
 

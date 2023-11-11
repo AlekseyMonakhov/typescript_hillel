@@ -5,12 +5,7 @@ export interface IZoo {
     buchgalteryDepartment: IBuchgalteryDepartment;
     adminDepartment: IAdminDepartment;
     casa: ICasa;
-}
-
-export interface ICasa {
-    sellTicket(client: IBaseClient | IRegisterClient, ticketType: TICKET_TYPE): void;
-
-    closeShift(): number;
+    marketingDepartment: IMarketingDepartment;
 }
 
 
@@ -35,13 +30,39 @@ export interface ITicket {
     clientId: string;
 }
 
-export interface ITicketPricesTable {
-    getPrice(type: TICKET_TYPE): number;
+export interface IAnimal {
+    readonly id: string;
+    readonly type: string;
+    name: string;
+    age: number;
+    health: string;
 }
+
 
 export interface IList {
     type: LIST_TYPE;
 }
+
+export interface IEmployee {
+    readonly id: string;
+    name: string;
+    position: string;
+    salary: number;
+
+    receiveSalary(amount: number): void;
+}
+
+export interface ICasa {
+    sellTicket(client: IBaseClient | IRegisterClient, ticketType: TICKET_TYPE): void;
+
+    closeShift(): number;
+}
+
+
+export interface ITicketPricesTable {
+    getPrice(type: TICKET_TYPE): number;
+}
+
 
 export interface IAdminDepartment {
 
@@ -66,43 +87,37 @@ export interface IBuchgalteryDepartment {
 
     getCurrentBudjet(): number
 
-    getIncomeReport(startDate: number, endDate: number): Map<string, number>
+    getIncomeReport(startDate: string, endDate: string): Map<string, number>
 
-    getOutcomeReport(startDate: number, endDate: number): Map<string, number>
+    getOutcomeReport(startDate: string, endDate: string): Map<string, number>
 
-    getBudjetReport(startDate: number, endDate: number): Map<string, number>
+    getBudjetReport(startDate: string, endDate: string): Map<string, number>
+
+    payAllSalary(): void
 }
 
-export interface IAnimal {
-    readonly id: string;
-    readonly type: string;
-    name: string;
-    age: number;
-    health: string;
+export interface IMarketingDepartment {
+    sendEmail(email: string, message: string): void
+
+    sendSMS(phone: string, message: string): void
+
+    sendMessageToAllClients(message: string): void
 }
 
-export interface IEmployee {
-    readonly id: string;
-    name: string;
-    position: string;
-    salary: number;
-
-    receiveSalary(amount: number): void;
-}
 
 export interface IBudjet {
 
-    getIncome(): Map<number, number>;
+    getIncome(): Map<string, number>;
 
     setIncome(income: number): void;
 
-    getOutcome(): Map<number, number>;
+    getOutcome(): Map<string, number>;
 
     setOutcome(outcome: number): void;
 
     calcBudjet(): number;
 
-    getBudjetHistory(): Map<number, number>;
+    getBudjetHistory(): Map<string, number>;
 }
 
 

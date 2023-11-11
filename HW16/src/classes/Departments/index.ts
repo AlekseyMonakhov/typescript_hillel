@@ -1,11 +1,23 @@
 import {AnimalCollection} from "../Collections/Animal";
 import {EmployeersCollection} from "../Collections/Employeers";
 import {Singleton} from "../../decorators";
-import {IAdminDepartment, IAnimal, IBuchgalteryDepartment, IEmployee} from "../../types";
+import {
+    IAdminDepartment,
+    IAnimal,
+    IBuchgalteryDepartment,
+    IEmployee,
+    IMarketingDepartment
+} from "../../types";
 import {Budjet} from "../Budjet";
 import {Employee} from "../Employee";
 import {Animal} from "../Animal";
+import {ClientCollection} from "../Collections/Clients";
 
+
+function parseDate(dateStr: string): Date {
+    const [day, month, year] = dateStr.split(".");
+    return new Date(`${year}-${month}-${day}`);
+}
 
 @Singleton
 export class AdminDepartment implements IAdminDepartment {
@@ -56,25 +68,27 @@ export class BuchgalteryDepartment implements IBuchgalteryDepartment {
         return this.budjet.calcBudjet();
     }
 
-    getIncomeReport(startDate: number, endDate: number): Map<string, number> {
+    getIncomeReport(startDate: string, endDate: string): Map<string, number> {
         const incomeReport = new Map<string, number>();
         const incomeHistory = this.budjet.getIncome();
 
+
         for (const [date, income] of incomeHistory) {
-            if (date >= startDate && date <= endDate) {
+            if (parseDate(date) >= parseDate(startDate) && parseDate(date) <= parseDate(endDate)) {
                 incomeReport.set(new Date(date).toLocaleDateString(), income);
             }
         }
 
+
         return incomeReport;
     }
 
-    getOutcomeReport(startDate: number, endDate: number): Map<string, number> {
+    getOutcomeReport(startDate: string, endDate: string): Map<string, number> {
         const outcomeReport = new Map<string, number>();
         const outcomeHistory = this.budjet.getOutcome()
 
         for (const [date, income] of outcomeHistory) {
-            if (date >= startDate && date <= endDate) {
+            if (parseDate(date) >= parseDate(startDate) && parseDate(date) <= parseDate(endDate)) {
                 outcomeReport.set(new Date(date).toLocaleDateString(), income);
             }
         }
@@ -82,12 +96,12 @@ export class BuchgalteryDepartment implements IBuchgalteryDepartment {
         return outcomeReport;
     }
 
-    getBudjetReport(startDate: number, endDate: number): Map<string, number> {
+    getBudjetReport(startDate: string, endDate: string): Map<string, number> {
         const budjetReport = new Map<string, number>();
         const budjetHistory = this.budjet.getBudjetHistory();
 
         for (const [date, income] of budjetHistory) {
-            if (date >= startDate && date <= endDate) {
+            if (parseDate(date) >= parseDate(startDate) && parseDate(date) <= parseDate(endDate)) {
                 budjetReport.set(new Date(date).toLocaleDateString(), income);
             }
         }
@@ -110,6 +124,32 @@ export class BuchgalteryDepartment implements IBuchgalteryDepartment {
             this.paySalaryById(employee.id);
         }
     }
+}
 
+
+export class MarketingDepartment implements IMarketingDepartment {
+    private clientsCollection = new ClientCollection();
+
+
+    sendEmail(email: string, message: string): void {
+        console.log(`Email was sent to ${email} with message: ${message}`);
+    }
+
+    sendSMS(phone: string, message: string): void {
+        console.log(`Email was sent to ${phone} with message: ${message}`);
+    }
+
+    sendMessageToAllClients(message: string): void {
+        const clients = this.clientsCollection.getAll().values();
+
+        for (const client of clients) {
+            if (client.contacts.email) {
+                this.sendEmail(client.contacts.email, message);
+                continue;
+            }
+
+            this.sendSMS(client.contacts.phone, message);
+        }
+    }
 
 }
