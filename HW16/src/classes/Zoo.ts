@@ -15,9 +15,13 @@ export class Zoo extends Observable implements IZoo {
         this.notify(message);
 
         setTimeout(() => {
-            console.log('Zoo is closed');
+            this.notify('Zoo is closing in 5 minutes');
+        }, 600 * 15)
+
+        setTimeout(() => {
+            this.notify('Zoo is closed');
             this.resetObserversList()
-        }, 10)
+        }, 600 * 20)
     }
 }
 
