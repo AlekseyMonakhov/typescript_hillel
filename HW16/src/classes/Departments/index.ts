@@ -126,7 +126,7 @@ export class BuchgalteryDepartment implements IBuchgalteryDepartment {
     }
 }
 
-
+@Singleton
 export class MarketingDepartment implements IMarketingDepartment {
     private clientsCollection = new ClientCollection();
 
