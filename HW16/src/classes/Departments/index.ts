@@ -14,7 +14,7 @@ import {Animal} from "../Animal";
 import {ClientCollection} from "../Collections/Clients";
 
 
-function parseDate(dateStr: string): Date {
+export function parseDate(dateStr: string): Date {
     const [day, month, year] = dateStr.split(".");
     return new Date(`${year}-${month}-${day}`);
 }
@@ -87,7 +87,7 @@ export class BuchgalteryDepartment implements IBuchgalteryDepartment {
 
         for (const [date, income] of incomeHistory) {
             if (parseDate(date) >= parseDate(startDate) && parseDate(date) <= parseDate(endDate)) {
-                incomeReport.set(new Date(date).toLocaleDateString(), income);
+                incomeReport.set(date, income);
             }
         }
 
@@ -101,7 +101,7 @@ export class BuchgalteryDepartment implements IBuchgalteryDepartment {
 
         for (const [date, income] of outcomeHistory) {
             if (parseDate(date) >= parseDate(startDate) && parseDate(date) <= parseDate(endDate)) {
-                outcomeReport.set(new Date(date).toLocaleDateString(), income);
+                outcomeReport.set(date, income);
             }
         }
 
@@ -114,7 +114,7 @@ export class BuchgalteryDepartment implements IBuchgalteryDepartment {
 
         for (const [date, income] of budjetHistory) {
             if (parseDate(date) >= parseDate(startDate) && parseDate(date) <= parseDate(endDate)) {
-                budjetReport.set(new Date(date).toLocaleDateString(), income);
+                budjetReport.set(date, income);
             }
         }
 
@@ -140,6 +140,10 @@ export class BuchgalteryDepartment implements IBuchgalteryDepartment {
         }
 
         return this.calculate(salaries);
+    }
+
+    resetBudjetHistory(): void {
+        this.budjet.resetHistory();
     }
 }
 

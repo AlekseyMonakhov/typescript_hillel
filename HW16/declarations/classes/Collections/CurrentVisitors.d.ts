@@ -1,6 +1,6 @@
 import { LIST_TYPE } from '../../constants';
-import { IList, IManageCollection, IRegisterClient } from '../../types';
-export declare class CurrentVisitorsCollection implements IManageCollection<IRegisterClient>, IList {
+import { IRegisterClient, IList, IManageCollection } from '../../types';
+export declare class CurrentVisitors implements IManageCollection<IRegisterClient>, IList {
     private collection;
     type: LIST_TYPE;
     add(client: IRegisterClient): void;

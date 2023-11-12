@@ -1,4 +1,5 @@
 import { IAdminDepartment, IAnimal, IBuchgalteryDepartment, IEmployee, IMarketingDepartment } from "../../types";
+export declare function parseDate(dateStr: string): Date;
 export declare class AdminDepartment implements IAdminDepartment {
     private animalsCollection;
     private employeesCollection;
@@ -21,6 +22,7 @@ export declare class BuchgalteryDepartment implements IBuchgalteryDepartment {
     getBudjetReport(startDate: string, endDate: string): Map<string, number>;
     paySalaryById(employeeId: string): number;
     payAllSalary(): number;
+    resetBudjetHistory(): void;
 }
 export declare class MarketingDepartment implements IMarketingDepartment {
     private clientsCollection;

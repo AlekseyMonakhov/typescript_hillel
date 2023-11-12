@@ -6,6 +6,8 @@ export interface IZoo {
     adminDepartment: IAdminDepartment;
     casa: ICasa;
     marketingDepartment: IMarketingDepartment;
+
+    notifyBeforeClose(message: string): void;
 }
 
 
@@ -96,6 +98,8 @@ export interface IBuchgalteryDepartment {
     paySalaryById(id: string): number
 
     payAllSalary(): number
+
+    resetBudjetHistory(): void
 }
 
 export interface IMarketingDepartment {
@@ -120,6 +124,8 @@ export interface IBudjet {
     calcBudjet(): number;
 
     getBudjetHistory(): Map<string, number>;
+
+    resetHistory(): void;
 }
 
 

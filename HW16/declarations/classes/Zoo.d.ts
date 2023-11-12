@@ -1,8 +1,8 @@
-import { Observable } from './Observable';
 import { AdminDepartment, BuchgalteryDepartment, MarketingDepartment } from "./Departments";
 import { Casa } from "./Casa";
 import { IZoo } from "../types";
-export declare class Zoo extends Observable implements IZoo {
+export declare class Zoo implements IZoo {
+    private currentVisitors;
     buchgalteryDepartment: BuchgalteryDepartment;
     adminDepartment: AdminDepartment;
     marketingDepartment: MarketingDepartment;

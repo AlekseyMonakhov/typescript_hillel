@@ -9,4 +9,5 @@ export declare class Budjet implements IBudjet {
     setOutcome(outcome: number): void;
     calcBudjet(): number;
     getBudjetHistory(): Map<string, number>;
+    resetHistory(): void;
 }

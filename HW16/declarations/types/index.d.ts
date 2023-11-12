@@ -5,6 +5,7 @@ export interface IZoo {
     adminDepartment: IAdminDepartment;
     casa: ICasa;
     marketingDepartment: IMarketingDepartment;
+    notifyBeforeClose(message: string): void;
 }
 export interface IBaseClient {
     name: string;
@@ -65,6 +66,7 @@ export interface IBuchgalteryDepartment {
     getBudjetReport(startDate: string, endDate: string): Map<string, number>;
     paySalaryById(id: string): number;
     payAllSalary(): number;
+    resetBudjetHistory(): void;
 }
 export interface IMarketingDepartment {
     sendEmail(email: string, message: string): void;
@@ -78,6 +80,7 @@ export interface IBudjet {
     setOutcome(outcome: number): void;
     calcBudjet(): number;
     getBudjetHistory(): Map<string, number>;
+    resetHistory(): void;
 }
 export interface IManageCollection<T> {
     add(item: T): void;
