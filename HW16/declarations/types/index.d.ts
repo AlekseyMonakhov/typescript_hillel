@@ -42,28 +42,29 @@ export interface IEmployee {
     receiveSalary(amount: number): void;
 }
 export interface ICasa {
-    sellTicket(client: IBaseClient | IRegisterClient, ticketType: TICKET_TYPE): void;
+    sellTicket(client: IBaseClient | IRegisterClient, ticketType: TICKET_TYPE): ITicket;
     closeShift(): number;
 }
 export interface ITicketPricesTable {
     getPrice(type: TICKET_TYPE): number;
 }
 export interface IAdminDepartment {
-    addAnimal(animal: Omit<IAnimal, 'id'>): void;
+    addAnimal(animal: Omit<IAnimal, 'id'>): IAnimal;
     updateAnimalInfo(id: string, animalInfo: Partial<Omit<IAnimal, 'id'>>): IAnimal | never;
     removeAnimal(id: string): boolean | never;
-    addEmployee(employee: Omit<IEmployee, 'id' | 'receiveSalary'>): void;
+    addEmployee(employee: Omit<IEmployee, 'id' | 'receiveSalary'>): IEmployee;
     updateEmployeeInfo(id: string, employeeInfo: Partial<Omit<IEmployee, 'id'>>): IEmployee | never;
     removeEmployee(id: string): boolean | never;
 }
 export interface IBuchgalteryDepartment {
-    addIncome(income: number): void;
-    addOutcome(cost: number): void;
+    addIncome(income: number): number;
+    addOutcome(cost: number): number;
     getCurrentBudjet(): number;
     getIncomeReport(startDate: string, endDate: string): Map<string, number>;
     getOutcomeReport(startDate: string, endDate: string): Map<string, number>;
     getBudjetReport(startDate: string, endDate: string): Map<string, number>;
-    payAllSalary(): void;
+    paySalaryById(id: string): number;
+    payAllSalary(): number;
 }
 export interface IMarketingDepartment {
     sendEmail(email: string, message: string): void;

@@ -24,9 +24,11 @@ export class AdminDepartment implements IAdminDepartment {
     private animalsCollection = new AnimalCollection();
     private employeesCollection = new EmployeersCollection();
 
-    addAnimal(animal: Omit<IAnimal, 'id'>): void {
+    addAnimal(animal: Omit<IAnimal, 'id'>): IAnimal {
         const newAnimal = new Animal(animal.type, animal.name, animal.age, animal.health);
         this.animalsCollection.add(newAnimal);
+
+        return newAnimal;
     }
 
     updateAnimalInfo(id: string, animalInfo: Partial<Omit<IAnimal, 'id'>>): IAnimal | never {
@@ -37,9 +39,11 @@ export class AdminDepartment implements IAdminDepartment {
         return this.animalsCollection.delete(id);
     }
 
-    addEmployee(employee: Omit<IEmployee, 'id' | 'receiveSalary'>): void {
+    addEmployee(employee: Omit<IEmployee, 'id' | 'receiveSalary'>): IEmployee {
         const newEmployee = new Employee(employee.name, employee.position, employee.salary);
         this.employeesCollection.add(newEmployee);
+
+        return newEmployee;
     }
 
     updateEmployeeInfo(id: string, employeeInfo: Partial<IEmployee>): IEmployee | never {
@@ -56,12 +60,20 @@ export class BuchgalteryDepartment implements IBuchgalteryDepartment {
     private budjet = new Budjet();
     private employeesCollection = new EmployeersCollection();
 
-    addIncome(income: number): void {
-        this.budjet.setIncome(income);
+    private calculate(arr: number[]): number {
+        return arr.reduce((acc, item) => acc + item, 0);
     }
 
-    addOutcome(cost: number): void {
+    addIncome(income: number): number {
+        this.budjet.setIncome(income);
+
+        return this.calculate(Array.from(this.budjet.getIncome().values()));
+    }
+
+    addOutcome(cost: number): number {
         this.budjet.setOutcome(cost)
+
+        return this.calculate(Array.from(this.budjet.getOutcome().values()));
     }
 
     getCurrentBudjet(): number {
@@ -109,20 +121,25 @@ export class BuchgalteryDepartment implements IBuchgalteryDepartment {
         return budjetReport;
     }
 
-    paySalaryById(employeeId: string): void {
+    paySalaryById(employeeId: string): number {
         const employee = this.employeesCollection.get(employeeId);
         const salary = employee.salary;
 
         this.budjet.setOutcome(salary);
         employee.receiveSalary(salary);
+
+        return salary;
     }
 
-    payAllSalary(): void {
+    payAllSalary(): number {
         const employees = this.employeesCollection.getAll().values();
+        const salaries: number[] = [];
 
         for (const employee of employees) {
-            this.paySalaryById(employee.id);
+            salaries.push(this.paySalaryById(employee.id));
         }
+
+        return this.calculate(salaries);
     }
 }
 

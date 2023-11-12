@@ -1,5 +1,5 @@
 import {TICKET_TYPE} from '../../constants';
-import {IBaseClient, ICasa, IRegisterClient} from '../../types';
+import {IBaseClient, ICasa, IRegisterClient, ITicket} from '../../types';
 import {RegisteredClient} from '../Client';
 import {ClientCollection} from '../Collections/Clients';
 import {Ticket, TicketPricesTable} from "../Ticket";
@@ -25,7 +25,7 @@ export class Casa implements ICasa {
         return registeredClient;
     }
 
-    sellTicket(client: IBaseClient | IRegisterClient, ticketType: TICKET_TYPE): void {
+    sellTicket(client: IBaseClient | IRegisterClient, ticketType: TICKET_TYPE): ITicket {
         const ticketPrice = this.ticketsPrices.getPrice(ticketType);
         let currentClient;
 
@@ -41,6 +41,8 @@ export class Casa implements ICasa {
 
         this.zoo.attach(currentClient);
         this.soldTickets.set(ticket.id, ticket);
+
+        return ticket;
     }
 
     closeShift(): number {
