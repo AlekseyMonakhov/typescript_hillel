@@ -1,11 +1,8 @@
 import {AdminDepartment} from "../classes/Departments";
 
 describe('AdminDepartment', () => {
-    let adminDepartment: AdminDepartment;
+    let adminDepartment = new AdminDepartment();
 
-    beforeEach(() => {
-        adminDepartment = new AdminDepartment();
-    });
 
     test('should add a new animal', () => {
         const animal = {type: 'Lion', name: 'Leo', age: 5, health: 'Good'};

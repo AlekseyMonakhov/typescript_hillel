@@ -2,11 +2,8 @@ import {MarketingDepartment} from "../classes/Departments";
 import {IMarketingDepartment} from "../types";
 
 describe('MarketingDepartment', () => {
-    let marketingDepartment: IMarketingDepartment;
+    let marketingDepartment = new MarketingDepartment();
 
-    beforeEach(() => {
-        marketingDepartment = new MarketingDepartment();
-    });
 
     test("it should send emal", () => {
         const email = 'myemail@gmail.com';

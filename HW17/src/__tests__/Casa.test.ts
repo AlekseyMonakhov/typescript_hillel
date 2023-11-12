@@ -3,11 +3,7 @@ import {Casa} from "../classes/Casa";
 import {TICKET_TYPE} from "../constants";
 
 describe('Casa', () => {
-    let casa: ICasa;
-
-    beforeEach(() => {
-        casa = new Casa();
-    });
+    let casa =new Casa();;
 
     test("it should sell ticket", () => {
         const client: IBaseClient = {
