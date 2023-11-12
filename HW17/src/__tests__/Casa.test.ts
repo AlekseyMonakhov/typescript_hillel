@@ -1,14 +1,12 @@
 import {IBaseClient, ICasa} from "../types";
 import {Casa} from "../classes/Casa";
-import {Zoo} from "../classes/Zoo";
 import {TICKET_TYPE} from "../constants";
 
 describe('Casa', () => {
     let casa: ICasa;
 
     beforeEach(() => {
-        const zoo = new Zoo();
-        casa = new Casa(zoo);
+        casa = new Casa();
     });
 
     test("it should sell ticket", () => {

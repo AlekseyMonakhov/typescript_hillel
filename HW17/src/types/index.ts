@@ -6,6 +6,8 @@ export interface IZoo {
     adminDepartment: IAdminDepartment;
     casa: ICasa;
     marketingDepartment: IMarketingDepartment;
+
+    notifyBeforeClose(message: string): void;
 }
 
 

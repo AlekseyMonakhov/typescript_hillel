@@ -16,6 +16,14 @@ export class RegisteredClient implements IRegisterClient {
     }
 
     update(message: string): void {
-        console.log(message);
+        console.log('Message from Zoo: ', message)
+
+        setTimeout(() => {
+            console.log('Zoo is closing in 5 minutes')
+        }, 600 * 15)
+
+        setTimeout(() => {
+            console.log('Zoo is closing in 1 minute')
+        }, 600 * 19)
     }
 }

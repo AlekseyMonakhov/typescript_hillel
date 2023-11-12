@@ -3,26 +3,28 @@ import {Singleton} from "../decorators";
 import {AdminDepartment, BuchgalteryDepartment, MarketingDepartment} from "./Departments";
 import {Casa} from "./Casa";
 import {IZoo} from "../types";
+import {CurrentVisitors} from "./Collections/CurrentVisitors";
 
 
 @Singleton
-export class Zoo extends Observable implements IZoo {
+export class Zoo implements IZoo {
+    private currentVisitors = new CurrentVisitors();
+
+
     public buchgalteryDepartment = new BuchgalteryDepartment();
     public adminDepartment = new AdminDepartment();
     public marketingDepartment = new MarketingDepartment();
-    public casa = new Casa(this);
+    public casa = new Casa();
+
 
     notifyBeforeClose(message: string): void {
-        this.notify(message);
+        const visitors = this.currentVisitors.getAll();
 
-        setTimeout(() => {
-            this.notify('Zoo is closing in 5 minutes');
-        }, 600 * 15)
+        for (const [id, visitor] of visitors) {
+            visitor.update(message);
+        }
 
-        setTimeout(() => {
-            this.notify('Zoo is closed');
-            this.resetObserversList()
-        }, 600 * 20)
+        this.currentVisitors.clear();
     }
 }
 

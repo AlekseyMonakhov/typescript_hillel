@@ -6,17 +6,16 @@ import {Ticket, TicketPricesTable} from "../Ticket";
 import {Singleton} from "../../decorators";
 import {BuchgalteryDepartment} from "../Departments";
 import {Zoo} from "../Zoo";
+import {CurrentVisitors} from "../Collections/CurrentVisitors";
 
 
 @Singleton
 export class Casa implements ICasa {
     private clients = new ClientCollection();
+    private currentVisitors = new CurrentVisitors();
     private ticketsPrices = new TicketPricesTable();
     private soldTickets = new Map<string, Ticket>();
     private buchgalteryDepartment = new BuchgalteryDepartment()
-
-    constructor(private zoo: Zoo) {
-    }
 
     private registerClient(client: IBaseClient): IRegisterClient {
         const registeredClient = new RegisteredClient(client.name, client.age, client.contacts);
@@ -35,12 +34,14 @@ export class Casa implements ICasa {
             currentClient = this.registerClient(client);
         }
 
+
         const ticket = new Ticket(ticketType, ticketPrice, currentClient.id);
 
         currentClient.ticketsIds.add(ticket.id);
 
-        this.zoo.attach(currentClient);
         this.soldTickets.set(ticket.id, ticket);
+
+        this.currentVisitors.add(currentClient);
 
         return ticket;
     }
