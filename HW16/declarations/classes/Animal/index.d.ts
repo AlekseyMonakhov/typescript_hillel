@@ -4,6 +4,6 @@ export declare class Animal implements IAnimal {
     name: string;
     age: number;
     health: string;
-    readonly id: string;
+    readonly id: any;
     constructor(type: string, name: string, age: number, health: string);
 }
