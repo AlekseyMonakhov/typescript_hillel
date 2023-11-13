@@ -1,21 +1,24 @@
-import {Observable} from './Observable';
-import {Singleton} from "../decorators";
-import {AdminDepartment, BuchgalteryDepartment, MarketingDepartment} from "./Departments";
-import {Casa} from "./Casa";
-import {IZoo} from "../types";
-import {CurrentVisitors} from "./Collections/CurrentVisitors";
-
+import { Observable } from "./Observable";
+import { Singleton } from "../decorators";
+import {
+    AdminDepartment,
+    BuchgalteryDepartment,
+    MarketingDepartment,
+} from "./Departments";
+import { Casa } from "./Casa";
+import { IZoo } from "../types";
+import { CurrentVisitors } from "./Collections/CurrentVisitors";
 
 @Singleton
 export class Zoo implements IZoo {
     private currentVisitors = new CurrentVisitors();
 
-
-    public buchgalteryDepartment = new BuchgalteryDepartment();
-    public adminDepartment = new AdminDepartment();
-    public marketingDepartment = new MarketingDepartment();
-    public casa = new Casa();
-
+    constructor(
+        public buchgalteryDepartment: BuchgalteryDepartment,
+        public adminDepartment: AdminDepartment,
+        public marketingDepartment: MarketingDepartment,
+        public casa: Casa
+    ) {}
 
     notifyBeforeClose(message: string): void {
         const visitors = this.currentVisitors.getAll();
@@ -27,4 +30,3 @@ export class Zoo implements IZoo {
         this.currentVisitors.clear();
     }
 }
-

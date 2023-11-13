@@ -1,7 +1,21 @@
+import { Casa } from "./classes/Casa";
+import { AdminDepartment, BuchgalteryDepartment, MarketingDepartment } from "./classes/Departments";
 import {Zoo} from "./classes/Zoo";
 import {TICKET_TYPE} from "./constants";
 
-const zoo = new Zoo();
+
+const buchgalteryDepartment = new BuchgalteryDepartment();
+const adminDepartment = new AdminDepartment();
+const marketingDepartment = new MarketingDepartment();
+const casa = new Casa();
+
+const zoo = new Zoo(
+    buchgalteryDepartment,
+    adminDepartment,
+    marketingDepartment,
+    casa
+);
+
 
 zoo.buchgalteryDepartment.addIncome(10000);
 
