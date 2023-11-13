@@ -57,11 +57,41 @@ export class AdminDepartment implements IAdminDepartment {
 
 @Singleton
 export class BuchgalteryDepartment implements IBuchgalteryDepartment {
+    private static readonly INCOME = 'income';
+    private static readonly OUTCOME = 'outcome';
+    private static readonly BUDJET = 'budjet';
+
     private budjet = new Budjet();
     private employeesCollection = new EmployeersCollection();
 
     private calculate(arr: number[]): number {
         return arr.reduce((acc, item) => acc + item, 0);
+    }
+
+    private getReport(startDate: string, endDate: string, reportType: string): Map<string, number> {
+        let history: Map<string, number>;
+        switch (reportType) {
+            case BuchgalteryDepartment.INCOME:
+                history = this.budjet.getIncome();
+                break;
+            case BuchgalteryDepartment.OUTCOME:
+                history = this.budjet.getOutcome();
+                break;
+            case BuchgalteryDepartment.BUDJET:
+                history = this.budjet.getBudjetHistory();
+                break;
+            default:
+                throw new Error('Invalid report type');
+        }
+
+        const report = new Map<string, number>();
+        for (const [date, value] of history) {
+            if (parseDate(date) >= parseDate(startDate) && parseDate(date) <= parseDate(endDate)) {
+                report.set(date, value);
+            }
+        }
+
+        return report;
     }
 
     addIncome(income: number): number {
@@ -81,44 +111,15 @@ export class BuchgalteryDepartment implements IBuchgalteryDepartment {
     }
 
     getIncomeReport(startDate: string, endDate: string): Map<string, number> {
-        const incomeReport = new Map<string, number>();
-        const incomeHistory = this.budjet.getIncome();
-
-
-        for (const [date, income] of incomeHistory) {
-            if (parseDate(date) >= parseDate(startDate) && parseDate(date) <= parseDate(endDate)) {
-                incomeReport.set(date, income);
-            }
-        }
-
-
-        return incomeReport;
+        return this.getReport(startDate, endDate, BuchgalteryDepartment.INCOME);
     }
 
     getOutcomeReport(startDate: string, endDate: string): Map<string, number> {
-        const outcomeReport = new Map<string, number>();
-        const outcomeHistory = this.budjet.getOutcome()
-
-        for (const [date, income] of outcomeHistory) {
-            if (parseDate(date) >= parseDate(startDate) && parseDate(date) <= parseDate(endDate)) {
-                outcomeReport.set(date, income);
-            }
-        }
-
-        return outcomeReport;
+        return this.getReport(startDate, endDate, BuchgalteryDepartment.OUTCOME);
     }
 
     getBudjetReport(startDate: string, endDate: string): Map<string, number> {
-        const budjetReport = new Map<string, number>();
-        const budjetHistory = this.budjet.getBudjetHistory();
-
-        for (const [date, income] of budjetHistory) {
-            if (parseDate(date) >= parseDate(startDate) && parseDate(date) <= parseDate(endDate)) {
-                budjetReport.set(date, income);
-            }
-        }
-
-        return budjetReport;
+        return this.getReport(startDate, endDate, BuchgalteryDepartment.BUDJET);
     }
 
     paySalaryById(employeeId: string): number {

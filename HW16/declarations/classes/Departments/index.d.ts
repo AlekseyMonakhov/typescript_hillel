@@ -11,9 +11,13 @@ export declare class AdminDepartment implements IAdminDepartment {
     removeEmployee(id: string): boolean | never;
 }
 export declare class BuchgalteryDepartment implements IBuchgalteryDepartment {
+    private static readonly INCOME;
+    private static readonly OUTCOME;
+    private static readonly BUDJET;
     private budjet;
     private employeesCollection;
     private calculate;
+    private getReport;
     addIncome(income: number): number;
     addOutcome(cost: number): number;
     getCurrentBudjet(): number;
