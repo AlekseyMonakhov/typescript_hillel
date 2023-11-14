@@ -1,5 +1,5 @@
-import {MarketingDepartment} from "../classes/Departments";
-import {IMarketingDepartment} from "../types";
+import {MarketingDepartment} from "./index";
+import {IMarketingDepartment} from "../../types";
 
 describe('MarketingDepartment', () => {
     let marketingDepartment = new MarketingDepartment();

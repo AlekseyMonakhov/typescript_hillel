@@ -1,5 +1,5 @@
-import {IBuchgalteryDepartment} from "../types";
-import {BuchgalteryDepartment} from "../classes/Departments";
+import {IBuchgalteryDepartment} from "../../types";
+import {BuchgalteryDepartment} from "./index";
 
 describe('BuchgalteryDepartment', () => {
     let buchgalteryDepartment: IBuchgalteryDepartment;

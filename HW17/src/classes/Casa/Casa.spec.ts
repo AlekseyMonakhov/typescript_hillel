@@ -1,6 +1,6 @@
-import {IBaseClient, ICasa} from "../types";
-import {Casa} from "../classes/Casa";
-import {TICKET_TYPE} from "../constants";
+import {IBaseClient, ICasa} from "../../types";
+import {Casa} from "./index";
+import {TICKET_TYPE} from "../../constants";
 
 describe('Casa', () => {
     let casa =new Casa();;

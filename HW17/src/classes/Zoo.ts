@@ -1,4 +1,3 @@
-import { Observable } from "./Observable";
 import { Singleton } from "../decorators";
 import {
     AdminDepartment,

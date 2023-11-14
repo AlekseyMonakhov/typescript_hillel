@@ -1,4 +1,4 @@
-import {AdminDepartment} from "../classes/Departments";
+import {AdminDepartment} from "./index";
 
 describe('AdminDepartment', () => {
     let adminDepartment = new AdminDepartment();
